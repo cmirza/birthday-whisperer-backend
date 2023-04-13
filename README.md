@@ -1,3 +1,5 @@
+<img src="./logo.png" alt="crage" style="width:200px;"/>
+
 # birthday-whisperer-backend
 
 Repository for Birthday Whisperer backend.
