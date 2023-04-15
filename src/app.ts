@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import contactsRoutes from './routes/contactsRoutes';
 import { register, login } from './controllers/userController';
+import errorMiddleware from './middleware/errorMiddleware';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,8 @@ mongoose
 app.post('/api/register', register);
 app.post('/api/login', login);
 app.use('/api/contacts', contactsRoutes);
+
+app.use(errorMiddleware);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

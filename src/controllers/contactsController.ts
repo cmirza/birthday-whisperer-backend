@@ -1,8 +1,9 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import { User, IUser, Contact, IContact } from '../models/User';
+import CustomError from '../utils/customError';
 import { IAuthRequest } from '../middleware/authMiddleware';
 
-export const addContact = async (req: IAuthRequest, res: Response) => {
+export const addContact = async (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user._id;
         const { name, birthdate } = req.body;
@@ -18,12 +19,12 @@ export const addContact = async (req: IAuthRequest, res: Response) => {
 
         res.status(201).json({ message: 'Contact added' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
 
-export const getContacts = async (req: IAuthRequest, res: Response) => {
+export const getContacts = async (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user._id;
 
@@ -34,11 +35,11 @@ export const getContacts = async (req: IAuthRequest, res: Response) => {
 
         res.status(200).json({ contacts: user.contacts });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
-export const deleteContact = async (req: IAuthRequest, res: Response) => {
+export const deleteContact = async (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user._id;
         const contactId = req.params.id;
@@ -55,11 +56,11 @@ export const deleteContact = async (req: IAuthRequest, res: Response) => {
 
         res.status(200).json({ message: 'Contact deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
-export const updateContact = async (req: IAuthRequest, res: Response) => {
+export const updateContact = async (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user._id;
         const contactId = req.params.id;
@@ -87,8 +88,6 @@ export const updateContact = async (req: IAuthRequest, res: Response) => {
 
         res.status(200).json({ message: 'Contact updated successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
-
-

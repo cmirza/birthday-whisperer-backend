@@ -1,11 +1,12 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import CustomError from '../utils/customError';
 import { User, IUser } from '../models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
-export const register  = async (req: Request, res: Response) => {
+export const register  = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password, phone } = req.body;
 
@@ -37,13 +38,12 @@ export const register  = async (req: Request, res: Response) => {
 
         res.status(201).json({ token });
     } catch (error) {
-        console.error(error); // Add this line to log the error
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
 
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
 
@@ -64,6 +64,6 @@ export const login = async (req: Request, res: Response) => {
 
         res.status(200).json({ token });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next(error);
     }
 };
