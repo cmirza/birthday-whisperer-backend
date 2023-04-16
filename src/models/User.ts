@@ -22,7 +22,7 @@ const contactSchema = new Schema(
   {
     _id: {
       type: Schema.Types.ObjectId,
-      auto: true
+      auto: true,
     },
     name: {
       type: String,
