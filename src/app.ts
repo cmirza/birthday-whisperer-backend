@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import logger from "./utils/logger";
+import "./scheduledJobs/sendReminders";
 import contactsRoutes from "./routes/contactsRoutes";
 import { register, login } from "./controllers/userController";
 import errorMiddleware from "./middleware/errorMiddleware";

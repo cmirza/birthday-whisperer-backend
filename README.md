@@ -13,7 +13,6 @@ Birthday Whisperer is a simple, SMS birthday reminder service. The backend utili
 - Project Begins
 - Create DB Schema
 
-
 #### April 14, 2023
 - Basic user and contact endpoints implemented
 - Added error handling middleware
@@ -21,3 +20,4 @@ Birthday Whisperer is a simple, SMS birthday reminder service. The backend utili
 
 #### April 15, 2023
 - Added logging
+- Added SMS functionality
