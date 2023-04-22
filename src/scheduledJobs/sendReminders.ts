@@ -50,5 +50,5 @@ const sendBirthdayReminders = async () => {
   }
 };
 
-// Schedule the function to run at 6:00AM, daily
+// Send messages at 6:00AM, daily
 cron.schedule("19 20 * * *", sendBirthdayReminders);

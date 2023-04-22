@@ -27,6 +27,10 @@ app.post("/api/register", register);
 app.post("/api/login", login);
 app.use("/api/contacts", contactsRoutes);
 
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.use(errorMiddleware);
 
 app.listen(port, () => {
