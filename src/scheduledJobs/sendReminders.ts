@@ -20,7 +20,7 @@ const findContactsByBirthday = async (
       });
 
       logger.info(
-        `User ${user.email} has ${filteredContacts.length} contacts with birthdays today`
+        `User ${user.phone} has ${filteredContacts.length} contacts with birthdays today`
       );
       return { user, filteredContacts };
     })
@@ -41,7 +41,7 @@ const sendBirthdayReminders = async () => {
         .join("\n")}`;
 
       logger.info(
-        `Sending birthday reminder to ${user.email} - ${user.phone}`
+        `Sending birthday reminder to ${user.phone} - ${user.phone}`
       );
       await sendSMS(user.phone, message);
     }
