@@ -5,7 +5,7 @@ import "dotenv/config";
 import logger from "./utils/logger";
 import "./scheduledJobs/sendReminders";
 import contactsRoutes from "./routes/contactsRoutes";
-import { register, login } from "./controllers/userController";
+import { requestOTP, verifyOTP } from "./controllers/userController";
 import errorMiddleware from "./middleware/errorMiddleware";
 
 const app = express();
@@ -23,8 +23,8 @@ mongoose
     logger.error("Error connecting to MongoDB:", error);
   });
 
-app.post("/api/register", register);
-app.post("/api/login", login);
+app.post("/api/request-otp", requestOTP);
+app.post("/api/verify-otp", verifyOTP);
 app.use("/api/contacts", contactsRoutes);
 
 app.get('/healthz', (req, res) => {
