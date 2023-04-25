@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import logger from "./utils/logger";
 import "./scheduledJobs/sendReminders";
-import "./scheduledJobs/cleanupExpiredOTPs";
+import "./scheduledJobs/otpCleanup";
 import contactsRoutes from "./routes/contactsRoutes";
 import { requestOTP, verifyOTP } from "./controllers/userController";
 import errorMiddleware from "./middleware/errorMiddleware";
