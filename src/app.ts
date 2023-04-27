@@ -6,6 +6,7 @@ import logger from "./utils/logger";
 import "./scheduledJobs/sendReminders";
 import "./scheduledJobs/otpCleanup";
 import contactsRoutes from "./routes/contactsRoutes";
+import testRoutes from "./routes/testRoutes";
 import { requestOTP, verifyOTP } from "./controllers/userController";
 import errorMiddleware from "./middleware/errorMiddleware";
 
@@ -33,6 +34,7 @@ app.get('/healthz', (req, res) => {
 });
 
 app.use(errorMiddleware);
+app.use("/test", testRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
