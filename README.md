@@ -29,3 +29,6 @@ View this app on [https://birthday-whisperer-frontend.onrender.com/](https://bir
 
 #### April 24, 2023
 - Scheduled cleanup for unused OTPs
+
+#### April 26, 2023
+- Added test endpoint for demo purposes
