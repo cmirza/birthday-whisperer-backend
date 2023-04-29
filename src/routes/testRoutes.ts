@@ -3,6 +3,6 @@ import { sendTestSMS } from '../controllers/testController';
 
 const router = Router();
 
-router.post('/:testKey/:phone', sendTestSMS);
+router.get('/:testKey/:phone', sendTestSMS);
 
 export default router;
