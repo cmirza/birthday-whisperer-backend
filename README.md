@@ -32,3 +32,6 @@ View this app on [https://birthday-whisperer-frontend.onrender.com/](https://bir
 
 #### April 26, 2023
 - Added test endpoint for demo purposes
+
+#### April 28, 2023
+- Added logic and model changes for custom user reminder time
