@@ -29,13 +29,24 @@ const findContactsByBirthday = async (
 
 const sendBirthdayReminders = async () => {
   const today = new Date();
+  const now = new Date();
 
-  logger.info("Sending birthday reminders for", today.toDateString());
+  logger.info("Sending birthday reminders for", now.toLocaleString());
 
   try {
     const usersWithBirthdays = await findContactsByBirthday(today);
 
     for (const { user, filteredContacts } of usersWithBirthdays) {
+      const hour = user.reminderTime;
+
+      const currentTime = new Date();
+      const timezoneOffset = user.timezone;
+      currentTime.setHours(currentTime.getHours() + timezoneOffset);
+
+      if (currentTime.getHours() !== hour) {
+        continue;
+      }
+
       const message = `Today's birthdays:\n${filteredContacts
         .map((contact: any) => `- ${contact.name}`)
         .join("\n")}`;
@@ -50,5 +61,4 @@ const sendBirthdayReminders = async () => {
   }
 };
 
-// Send messages at 6:00AM, daily
-cron.schedule("19 20 * * *", sendBirthdayReminders);
+cron.schedule("0 * * * *", sendBirthdayReminders);

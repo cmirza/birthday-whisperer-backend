@@ -22,7 +22,7 @@ export const requestOTP = async (
     if (!phone) {
       return res.status(400).json({ message: "Phone number is required" });
     }
-    
+
     // Check if user exists
     const existingUser = await User.findOne({ phone });
     const isNewUser = !existingUser;
@@ -79,7 +79,11 @@ export const verifyOTP = async (
     let user = await User.findOne({ phone });
 
     if (!user) {
-      user = new User({ phone });
+      user = new User({
+        phone,
+        timezone: req.body.timezone,
+        reminderTime: req.body.reminderTime,
+      });
       await user.save();
       logger.info("A new user has been created");
     }
