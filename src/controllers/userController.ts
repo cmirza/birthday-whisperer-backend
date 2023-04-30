@@ -6,6 +6,7 @@ import { User, IUser } from "../models/User";
 import { OTP, IOTP } from "../models/OTP";
 import { generateOTP } from "../utils/otpGenerator";
 import { sendSMS } from "../utils/smsSender";
+import { AuthenticatedRequest } from "../types";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 
@@ -86,6 +87,12 @@ export const verifyOTP = async (
       });
       await user.save();
       logger.info("A new user has been created");
+    } else {
+      if (req.body.timezone) {
+        user.timezone = req.body.timezone;
+        await user.save();
+        logger.info(`User {${user.phone}} timezone has been updated`);
+      }
     }
 
     // Generate JWT
@@ -99,6 +106,64 @@ export const verifyOTP = async (
     logger.info("A new JWT has been generated");
   } catch (error) {
     logger.error("Error verifying OTP:", error);
+    next(error);
+  }
+};
+
+export const getUserSettings = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const settings = {
+      timezone: user.timezone,
+      reminderTime: user.reminderTime,
+    };
+
+    res.status(200).json(settings);
+    logger.info("User settings retrieved");
+  } catch (error) {
+    logger.error("Error retrieving user settings: ", error);
+    next(error);
+  }
+};
+
+export const updateUserSettings = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user.id;
+    const { timezone, reminderTime } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (timezone !== undefined) {
+      user.timezone = timezone;
+    }
+
+    if (reminderTime !== undefined) {
+      user.reminderTime = reminderTime;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "User settings updated" });
+    logger.info("User settings updated");
+  } catch (error) {
+    logger.error("Error updating user settings: ", error);
     next(error);
   }
 };

@@ -5,6 +5,7 @@ import "dotenv/config";
 import logger from "./utils/logger";
 import "./scheduledJobs/sendReminders";
 import "./scheduledJobs/otpCleanup";
+import userRoutes from "./routes/userRoutes";
 import contactsRoutes from "./routes/contactsRoutes";
 import testRoutes from "./routes/testRoutes";
 import { requestOTP, verifyOTP } from "./controllers/userController";
@@ -25,12 +26,11 @@ mongoose
     logger.error("Error connecting to MongoDB:", error);
   });
 
-app.post("/api/request-otp", requestOTP);
-app.post("/api/verify-otp", verifyOTP);
+app.use("/api/", userRoutes);
 app.use("/api/contacts", contactsRoutes);
 
-app.get('/healthz', (req, res) => {
-  res.status(200).send('OK');
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 
 app.use(errorMiddleware);
