@@ -38,3 +38,6 @@ View this app on [https://birthday-whisperer-frontend.onrender.com/](https://bir
 
 #### April 29 , 2023
 - Added user settings to model, controller and route
+
+#### April 30, 2023
+- Added user settings, with time zone and reminder time
