@@ -12,6 +12,8 @@ export interface IContact extends Document {
 export interface IUser extends Document {
   phone: string;
   contacts: IUserContacts;
+  timezone: string;
+  reminderTime: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,6 +44,14 @@ const userSchema = new Schema(
       unique: true
     },
     contacts: [contactSchema],
+    timezone: {
+      type: String,
+      required: true
+    },
+    reminderTime: {
+      type: Number,
+      required: true
+    }
   },
   { timestamps: true }
 );
