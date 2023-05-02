@@ -2,6 +2,7 @@ import { User, IUser } from "../models/User";
 import { sendSMS } from "../utils/smsSender";
 import logger from "../utils/logger";
 import cron from "node-cron";
+import moment from "moment-timezone";
 
 const findContactsByBirthday = async (
   date: Date
@@ -38,12 +39,11 @@ const sendBirthdayReminders = async () => {
 
     for (const { user, filteredContacts } of usersWithBirthdays) {
       const hour = user.reminderTime;
-
-      const currentTime = new Date();
-      const timezoneOffset = user.timezone;
-      currentTime.setHours(currentTime.getHours() + timezoneOffset);
-
-      if (currentTime.getHours() !== hour) {
+  
+      const currentTime = moment();
+      const timezoneOffset = moment.tz.zone(user.timezone)?.utcOffset(currentTime.unix()) || 0;
+      currentTime.add(timezoneOffset, 'minutes');
+      if (currentTime.hours() !== hour) {
         continue;
       }
 
