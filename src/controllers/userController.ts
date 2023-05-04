@@ -91,7 +91,7 @@ export const verifyOTP = async (
       if (req.body.timezone) {
         user.timezone = req.body.timezone;
         await user.save();
-        logger.info(`User {${user.phone}} timezone has been updated`);
+        logger.info(`User ${user.phone} timezone has been updated`);
       }
     }
 
