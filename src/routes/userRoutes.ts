@@ -4,6 +4,7 @@ import {
   verifyOTP,
   getUserSettings,
   updateUserSettings,
+  deleteAccount
 } from "../controllers/userController";
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -13,5 +14,6 @@ router.post("/request-otp", requestOTP);
 router.post("/verify-otp", verifyOTP);
 router.get("/settings", authMiddleware, getUserSettings);
 router.patch("/settings", authMiddleware, updateUserSettings);
+router.delete("/account", authMiddleware, deleteAccount);
 
 export default router;
