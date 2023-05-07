@@ -13,11 +13,10 @@ const findContactsByBirthday = async (
   return users
     .map((user) => {
       const filteredContacts = user.contacts.filter((contact: any) => {
-        const birthdate = new Date(contact.birthdate);
-        return (
-          birthdate.getDate() === date.getDate() &&
-          birthdate.getMonth() === date.getMonth()
-        );
+        const birthdate = moment(contact.birthdate).utc().startOf("day");
+        const today = moment(date).utc().startOf("day");
+        const isSame = today.format('MM-DD') === birthdate.format('MM-DD');
+        return isSame;
       });
 
       logger.info(
