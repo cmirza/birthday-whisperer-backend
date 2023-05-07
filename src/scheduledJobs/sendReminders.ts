@@ -57,4 +57,3 @@ const sendBirthdayReminders = async () => {
 };
 
 cron.schedule("0 * * * *", sendBirthdayReminders);
-sendBirthdayReminders();
