@@ -39,10 +39,8 @@ const sendBirthdayReminders = async () => {
 
     for (const { user, filteredContacts } of usersWithBirthdays) {
       const hour = user.reminderTime;
-  
-      const currentTime = moment();
-      const timezoneOffset = moment.tz.zone(user.timezone)?.utcOffset(currentTime.unix()) || 0;
-      currentTime.add(timezoneOffset, 'minutes');
+
+      const currentTime = moment().tz(user.timezone);
       if (currentTime.hours() !== hour) {
         continue;
       }
@@ -51,9 +49,7 @@ const sendBirthdayReminders = async () => {
         .map((contact: any) => `- ${contact.name}`)
         .join("\n")}`;
 
-      logger.info(
-        `Sending birthday reminder to ${user.phone} - ${user.phone}`
-      );
+      logger.info(`Sending birthday reminder to ${user.phone} - ${user.phone}`);
       await sendSMS(user.phone, message);
     }
   } catch (error) {
@@ -62,3 +58,4 @@ const sendBirthdayReminders = async () => {
 };
 
 cron.schedule("0 * * * *", sendBirthdayReminders);
+sendBirthdayReminders();
